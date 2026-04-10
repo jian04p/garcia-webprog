@@ -1,96 +1,114 @@
 import Button from '../components/Button';
-import homeStudio from '../assets/home-studio.svg';
+import articles from '../assets/article-content.js';
 
 const metrics = [
-  { value: '12', label: 'Student-ready layouts', note: 'Flexible section systems for school web projects.' },
-  { value: '08', label: 'Content blocks', note: 'Reusable patterns for hero, story, gallery, and CTA areas.' },
-  { value: '24', label: 'Visual studies', note: 'Thumbnail explorations before the final composition is chosen.' },
-  { value: '04', label: 'Brand pillars', note: 'Clarity, rhythm, warmth, and structure across each page.' },
+  {
+    value: '05',
+    label: 'Featured perfumes',
+    note: 'A starter lineup of designer bottles that are easy to compare.',
+  },
+  {
+    value: '03',
+    label: 'Browsing angles',
+    note: 'Each writeup looks at notes, mood, and best occasion.',
+  },
+  {
+    value: 'PH',
+    label: 'Local voice',
+    note: 'FragPH keeps the tone casual, clear, and mabango-first.',
+  },
+  {
+    value: '24/7',
+    label: 'Style inspo',
+    note: 'The site makes perfume browsing feel simple, polished, and fun.',
+  },
 ];
 
 const services = [
   {
-    title: 'Story-led homepages',
+    title: 'Perfume spotlights',
     description:
-      'We use strong hierarchy, bold headlines, and calm supporting copy so the first screen explains the brand before the user scrolls.',
+      'Each featured bottle gets its own article with scent notes, mood, and a short explanation that is easy for beginners to understand.',
   },
   {
-    title: 'Profile and about systems',
+    title: 'Wearable recommendations',
     description:
-      'About pages balance biography, values, proof points, and visual texture so the person behind the work feels memorable and credible.',
+      'FragPH focuses on where a fragrance fits best, from daytime campus wear to night outs and date-ready picks.',
   },
   {
-    title: 'Editorial article layouts',
+    title: 'Simple fragrance language',
     description:
-      'Card grids, reading notes, and featured story modules help collections of writing feel curated rather than simply listed.',
+      'The goal is to explain perfume in a way that feels stylish without sounding too technical or intimidating.',
   },
 ];
 
 const principles = [
-  'Design decisions start with the content we want people to remember.',
-  'Simple shapes and clear spacing can still feel premium when the rhythm is intentional.',
-  'Reusable patterns make revision faster without making pages look repetitive.',
+  'A good perfume writeup should help readers imagine the scent before they buy or sample.',
+  'The best beginner blogs make fragrance feel approachable, not overly complicated.',
+  'Visual polish matters, but the bottle, mood, and story should stay the focus.',
 ];
 
 const HomePage = () => {
+  const featuredPerfume = articles[0];
+
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 sm:px-6 lg:px-8">
-      <section className="grid gap-8 rounded-[34px] border border-[#181716] bg-[#fffaf2]/90 p-6 shadow-[0_24px_70px_rgba(24,23,22,0.08)] lg:grid-cols-[1.05fr_0.95fr] lg:p-8">
+      <section className="grid gap-8 rounded-[34px] border border-[#3b3025] bg-[#15171a]/92 p-6 shadow-[0_24px_70px_rgba(0,0,0,0.3)] lg:grid-cols-[1.05fr_0.95fr] lg:p-8">
         <div className="flex flex-col justify-between gap-6">
           <div>
-            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.34em] text-[#6d6459]">
-              Home / Studio Introduction
+            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.34em] text-[#b59663]">
+              Home / Perfume Blog
             </p>
-            <h1 className="max-w-2xl text-4xl font-semibold leading-none tracking-[-0.05em] text-[#181716] sm:text-5xl lg:text-6xl">
-              We build calm, content-first interfaces with a strong editorial voice.
+            <h1 className="max-w-2xl text-4xl font-semibold leading-none tracking-[-0.05em] text-[#f3ecdf] sm:text-5xl lg:text-6xl">
+              FragPH is a perfume blog for people who want to stay mabango.
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-7 text-[#4d473f] sm:text-lg">
-              Lineform is a concept studio focused on wireframe-inspired interfaces that still feel
-              warm, polished, and memorable. Every layout starts with story structure, then grows
-              into a visual system that helps readers understand the page quickly.
+            <p className="mt-5 max-w-xl text-base leading-7 text-[#c4b6a6] sm:text-lg">
+              FragPH highlights designer fragrances in a clean and easy-to-browse layout. The site
+              focuses on scent family, mood, and occasion so readers can quickly understand what a
+              perfume feels like before diving into the full article.
             </p>
           </div>
 
           <div className="flex flex-wrap gap-3">
             <Button to="/about" variant="primary">
-              Meet the Studio
+              About FragPH
             </Button>
             <Button to="/articles">Browse Articles</Button>
           </div>
 
-          <div className="rounded-[28px] border border-[#181716]/15 bg-[#f4efe7] p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6d6459]">
-              Why this works
+          <div className="rounded-[28px] border border-[#3b3025] bg-white/[0.03] p-4">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#b59663]">
+              Featured pick
             </p>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-[#4d473f]">
-              The homepage now introduces a brand, shows a custom image, and explains the design
-              direction instead of relying on placeholder copy.
+            <p className="mt-2 max-w-xl text-sm leading-6 text-[#c4b6a6]">
+              {featuredPerfume.title} leads the homepage because it matches the polished vibe of
+              FragPH: premium-looking bottle, easy designer appeal, and a scent profile that feels
+              modern right away.
             </p>
           </div>
         </div>
 
         <div className="flex items-center justify-center">
           <img
-            src={homeStudio}
-            alt="Abstract studio board with content cards and layout planning panels"
-            className="w-full rounded-[30px] border border-[#181716] bg-[#f7f2ea]"
+            src={featuredPerfume.image}
+            alt={featuredPerfume.imageAlt}
+            className="w-full rounded-[30px] border border-[#3b3025] bg-white object-contain p-6"
           />
         </div>
       </section>
 
-      <section className="rounded-[34px] border border-[#181716] bg-[#fffaf2]/80 p-6 lg:p-8">
+      <section className="rounded-[34px] border border-[#3b3025] bg-[#121417]/88 p-6 lg:p-8">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#6d6459]">
-              Studio Metrics
+            <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#b59663]">
+              FragPH Snapshot
             </p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#181716]">
-              Quick proof that the system can scale
+            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#f3ecdf]">
+              A clean perfume blog can still feel rich in content
             </h2>
           </div>
-          <p className="max-w-xl text-sm leading-6 text-[#4d473f]">
-            These cards show how the same visual language handles numbers, supporting detail, and
-            consistent spacing without losing readability.
+          <p className="max-w-xl text-sm leading-6 text-[#c4b6a6]">
+            FragPH keeps the structure clean while making the content perfume-focused and easy to browse.
           </p>
         </div>
 
@@ -98,49 +116,49 @@ const HomePage = () => {
           {metrics.map((metric) => (
             <article
               key={metric.label}
-              className="rounded-[28px] border border-[#181716] bg-white/50 p-5 shadow-[0_12px_30px_rgba(24,23,22,0.04)]"
+              className="rounded-[28px] border border-[#3b3025] bg-white/[0.03] p-5 shadow-[0_12px_30px_rgba(0,0,0,0.16)]"
             >
-              <p className="text-3xl font-semibold tracking-[-0.05em] text-[#181716]">{metric.value}</p>
-              <h3 className="mt-3 text-lg font-semibold text-[#181716]">{metric.label}</h3>
-              <p className="mt-2 text-sm leading-6 text-[#4d473f]">{metric.note}</p>
+              <p className="text-3xl font-semibold tracking-[-0.05em] text-[#f3ecdf]">{metric.value}</p>
+              <h3 className="mt-3 text-lg font-semibold text-[#f3ecdf]">{metric.label}</h3>
+              <p className="mt-2 text-sm leading-6 text-[#c4b6a6]">{metric.note}</p>
             </article>
           ))}
         </div>
       </section>
 
       <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="rounded-[34px] border border-[#181716] bg-[#fffaf2]/80 p-6 lg:p-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#6d6459]">
-            What We Design
+        <div className="rounded-[34px] border border-[#3b3025] bg-[#15171a]/88 p-6 lg:p-8">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#b59663]">
+            What FragPH Covers
           </p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#181716]">
-            Three building blocks for stronger student projects
+          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#f3ecdf]">
+            Three ways the blog keeps fragrance browsing simple
           </h2>
 
           <div className="mt-6 grid gap-4">
             {services.map((service) => (
               <article
                 key={service.title}
-                className="rounded-[28px] border border-[#181716]/15 bg-[#f4efe7] p-5"
+                className="rounded-[28px] border border-[#3b3025] bg-white/[0.03] p-5"
               >
-                <h3 className="text-xl font-semibold text-[#181716]">{service.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#4d473f]">{service.description}</p>
+                <h3 className="text-xl font-semibold text-[#f3ecdf]">{service.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-[#c4b6a6]">{service.description}</p>
               </article>
             ))}
           </div>
         </div>
 
-        <aside className="rounded-[34px] border border-[#181716] bg-[#181716] p-6 text-[#f4efe7] lg:p-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#c9beb0]">
-            Design Principles
+        <aside className="rounded-[34px] border border-[#3b3025] bg-[linear-gradient(180deg,#181311_0%,#101213_100%)] p-6 text-[#f3ecdf] lg:p-8">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#b59663]">
+            FragPH Mood
           </p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#f4efe7]">
-            A homepage should guide, not just decorate.
+          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#f3ecdf]">
+            Perfume content should feel stylish, helpful, and easy to scan.
           </h2>
           <div className="mt-6 space-y-4">
             {principles.map((principle) => (
-              <div key={principle} className="rounded-[24px] border border-white/10 bg-white/5 p-4">
-                <p className="text-sm leading-6 text-[#e7ded1]">{principle}</p>
+              <div key={principle} className="rounded-[24px] border border-[#3b3025] bg-white/[0.04] p-4">
+                <p className="text-sm leading-6 text-[#d8cab7]">{principle}</p>
               </div>
             ))}
           </div>
@@ -151,3 +169,7 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+
+
+

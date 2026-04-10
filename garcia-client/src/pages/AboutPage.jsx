@@ -1,76 +1,78 @@
 import Button from '../components/Button';
-import aboutProfile from '../assets/about-profile.svg';
+import articles from '../assets/article-content.js';
 
 const values = [
   {
-    title: 'Content before decoration',
+    title: 'Discover by scent family',
     description:
-      'We map the message first, then layer styling only where it improves clarity, pacing, or emotional tone.',
+      'FragPH helps people understand whether a perfume leans fresh, sweet, woody, aquatic, or warm before they even sample it.',
   },
   {
-    title: 'Structure with personality',
+    title: 'Match by mood and occasion',
     description:
-      'Even low-fidelity interfaces can feel distinctive when typography, spacing, and repeated shapes are handled carefully.',
+      'The blog keeps recommendations practical by connecting fragrances to dates, weekends, hot weather, night outs, and everyday wear.',
   },
   {
-    title: 'Flexible systems',
+    title: 'Keep the language approachable',
     description:
-      'Our sections are built to expand with new content, which is especially useful for academic projects and portfolio updates.',
+      'Instead of making fragrance feel intimidating, FragPH explains perfumes in a way that is simple, stylish, and easy to remember.',
   },
 ];
 
 const milestones = [
   {
-    year: '2023',
-    title: 'Foundation phase',
+    year: 'Step 01',
+    title: 'Choose recognizable bottles',
     description:
-      'Lineform began as a study of wireframe systems that could still feel refined and presentation-ready.',
+      'The blog starts with five designer fragrances that are familiar, visually distinct, and easy for readers to compare.',
   },
   {
-    year: '2024',
-    title: 'Content experiments',
+    year: 'Step 02',
+    title: 'Write clear descriptions',
     description:
-      'We focused on turning placeholder layouts into pages with stronger tone, storytelling, and visual hierarchy.',
+      'Each article explains the scent in plain language so readers can understand the vibe without needing deep perfume knowledge.',
   },
   {
-    year: '2025',
-    title: 'Editorial direction',
+    year: 'Step 03',
+    title: 'Build the FragPH identity',
     description:
-      'The current identity combines quiet colors, framed compositions, and custom illustrations to create a fuller brand feel.',
+      'The final touch is a cleaner brand voice, a memorable name, and a polished layout that still fits the class activity structure.',
   },
 ];
 
 const facts = [
-  { label: 'Primary focus', value: 'Narrative web layouts' },
-  { label: 'Visual language', value: 'Editorial, calm, framed' },
-  { label: 'Preferred output', value: 'Readable pages with strong rhythm' },
-  { label: 'Design promise', value: 'Clear content with character' },
+  { label: 'Brand name', value: 'FragPH' },
+  { label: 'Tagline', value: 'Stay mabango!' },
+  { label: 'Content focus', value: 'Perfume blog and bottle features' },
+  { label: 'Best for', value: 'Readers exploring designer scents' },
 ];
 
 const AboutPage = () => {
+  const aboutFeature = articles[2];
+
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 sm:px-6 lg:px-8">
-      <section className="grid gap-8 rounded-[34px] border border-[#181716] bg-[#fffaf2]/90 p-6 shadow-[0_24px_70px_rgba(24,23,22,0.08)] lg:grid-cols-[0.9fr_1.1fr] lg:p-8">
+      <section className="grid gap-8 rounded-[34px] border border-[#3b3025] bg-[#15171a]/92 p-6 shadow-[0_24px_70px_rgba(0,0,0,0.3)] lg:grid-cols-[0.9fr_1.1fr] lg:p-8">
         <div className="flex items-center justify-center">
           <img
-            src={aboutProfile}
-            alt="Profile-inspired illustration with portrait frame and information cards"
-            className="w-full rounded-[30px] border border-[#181716] bg-[#f7f2ea]"
+            src={aboutFeature.image}
+            alt={aboutFeature.imageAlt}
+            className="w-full rounded-[30px] border border-[#3b3025] bg-white object-contain p-6"
           />
         </div>
 
         <div className="flex flex-col justify-between gap-6">
           <div>
-            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.34em] text-[#6d6459]">
-              About / Studio Identity
+            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.34em] text-[#b59663]">
+              About / FragPH Identity
             </p>
-            <h1 className="max-w-2xl text-4xl font-semibold leading-none tracking-[-0.05em] text-[#181716] sm:text-5xl">
-              We translate simple wireframes into pages that feel thoughtful and human.
+            <h1 className="max-w-2xl text-4xl font-semibold leading-none tracking-[-0.05em] text-[#f3ecdf] sm:text-5xl">
+              FragPH helps people discover perfumes by scent family, mood, and occasion.
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-7 text-[#4d473f] sm:text-lg">
-              The about page now tells a clearer story: what the studio values, how the design
-              language evolved, and why the visual system stays minimal without becoming generic.
-              Instead of filler text, it introduces a point of view.
+            <p className="mt-5 max-w-xl text-base leading-7 text-[#c4b6a6] sm:text-lg">
+              This site is designed as a perfume blog that keeps fragrance content beginner-friendly
+              and visually polished. Instead of placeholder text, FragPH now explains what the site
+              is about, who it helps, and why each featured bottle was selected.
             </p>
           </div>
 
@@ -78,25 +80,25 @@ const AboutPage = () => {
             <Button to="/" variant="primary">
               Back Home
             </Button>
-            <Button to="/articles">Read the Notes</Button>
+            <Button to="/articles">Read the Articles</Button>
           </div>
 
-          <div className="rounded-[28px] border border-[#181716]/15 bg-[#f4efe7] p-4">
-            <p className="text-sm leading-6 text-[#4d473f]">
-              This section uses a custom illustration to make the profile content feel branded,
-              while the writeup explains the reasoning behind the design choices.
+          <div className="rounded-[28px] border border-[#3b3025] bg-white/[0.03] p-4">
+            <p className="text-sm leading-6 text-[#c4b6a6]">
+              The site name is short, memorable, and local, while the tagline keeps the tone light
+              and fun: stay mabango.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="rounded-[34px] border border-[#181716] bg-[#fffaf2]/80 p-6 lg:p-8">
+      <section className="rounded-[34px] border border-[#3b3025] bg-[#121417]/88 p-6 lg:p-8">
         <div className="mb-6">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#6d6459]">
-            Studio Values
+          <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#b59663]">
+            FragPH Values
           </p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#181716]">
-            Three rules that shape every page
+          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#f3ecdf]">
+            Three ideas behind the blog
           </h2>
         </div>
 
@@ -104,52 +106,52 @@ const AboutPage = () => {
           {values.map((value) => (
             <article
               key={value.title}
-              className="rounded-[28px] border border-[#181716]/15 bg-white/55 p-5"
+              className="rounded-[28px] border border-[#3b3025] bg-white/[0.03] p-5"
             >
-              <h3 className="text-xl font-semibold text-[#181716]">{value.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-[#4d473f]">{value.description}</p>
+              <h3 className="text-xl font-semibold text-[#f3ecdf]">{value.title}</h3>
+              <p className="mt-3 text-sm leading-6 text-[#c4b6a6]">{value.description}</p>
             </article>
           ))}
         </div>
       </section>
 
       <section className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
-        <div className="rounded-[34px] border border-[#181716] bg-[#181716] p-6 text-[#f4efe7] lg:p-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#c9beb0]">
-            Timeline
+        <div className="rounded-[34px] border border-[#3b3025] bg-[linear-gradient(180deg,#171210_0%,#101214_100%)] p-6 text-[#f3ecdf] lg:p-8">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#b59663]">
+            Build Process
           </p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#f4efe7]">
-            How the direction matured over time
+          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#f3ecdf]">
+            How the perfume concept comes together
           </h2>
 
           <div className="mt-6 space-y-4">
             {milestones.map((milestone) => (
-              <article key={milestone.year} className="rounded-[26px] border border-white/12 bg-white/5 p-5">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[#c49a6c]">
+              <article key={milestone.year} className="rounded-[26px] border border-[#3b3025] bg-white/[0.04] p-5">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[#b59663]">
                   {milestone.year}
                 </p>
-                <h3 className="mt-2 text-xl font-semibold text-[#f4efe7]">{milestone.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#ddd2c5]">{milestone.description}</p>
+                <h3 className="mt-2 text-xl font-semibold text-[#f3ecdf]">{milestone.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-[#d8cab7]">{milestone.description}</p>
               </article>
             ))}
           </div>
         </div>
 
-        <aside className="rounded-[34px] border border-[#181716] bg-[#fffaf2]/80 p-6 lg:p-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#6d6459]">
+        <aside className="rounded-[34px] border border-[#3b3025] bg-[#15171a]/88 p-6 lg:p-8">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#b59663]">
             Quick Facts
           </p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#181716]">
-            The profile in one glance
+          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#f3ecdf]">
+            FragPH at a glance
           </h2>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {facts.map((fact) => (
-              <div key={fact.label} className="rounded-[24px] border border-[#181716]/15 bg-[#f4efe7] p-4">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6d6459]">
+              <div key={fact.label} className="rounded-[24px] border border-[#3b3025] bg-white/[0.03] p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#b59663]">
                   {fact.label}
                 </p>
-                <p className="mt-2 text-base font-semibold text-[#181716]">{fact.value}</p>
+                <p className="mt-2 text-base font-semibold text-[#f3ecdf]">{fact.value}</p>
               </div>
             ))}
           </div>
@@ -160,3 +162,4 @@ const AboutPage = () => {
 };
 
 export default AboutPage;
+
