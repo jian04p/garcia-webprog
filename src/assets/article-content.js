@@ -6,7 +6,7 @@ const articles = [
     family: 'Woody spicy',
     vibe: 'Polished, clean, dressed-up',
     bestFor: 'Dinner dates and smart casual nights',
-    image: 'https://fimgs.net/mdimg/perfume/375x500.55963.jpg',
+    image: 'https://media.ulta.com/i/ulta/2599459?fmt=auto&h=600&w=600',
     imageAlt: 'Valentino Born in Roma perfume bottle',
     summary:
       'A sleek designer scent that mixes mineral freshness, ginger spice, and smoky woods into something modern and easy to wear.',
@@ -28,7 +28,7 @@ const articles = [
     family: 'Aromatic fougere',
     vibe: 'Loud, bold, attention-grabbing',
     bestFor: 'Night outs, parties, and cooler evenings',
-    image: 'https://fimgs.net/mdimg/perfume/375x500.16657.jpg',
+    image: 'https://media.ulta.com/i/ulta/2265447?fmt=auto&h=600&w=600',
     imageAlt: 'Versace Eros perfume bottle',
     summary:
       'Versace Eros is sweet, minty, and high-energy, making it one of the easiest designer fragrances to recognize in a crowd.',
@@ -50,7 +50,7 @@ const articles = [
     family: 'Woody aromatic',
     vibe: 'Sweet, modern, playful',
     bestFor: 'Weekend dates and sunset wear',
-    image: 'https://fimgs.net/mdimg/perfume/375x500.71761.jpg',
+    image: 'https://media.ulta.com/i/ulta/2595268?fmt=auto&h=600&w=600',
     imageAlt: 'Valentino Coral Fantasy perfume bottle',
     summary:
       'Coral Fantasy gives Valentino\'s DNA a fruitier and warmer twist, making it feel lively, flirty, and very easy to enjoy.',
@@ -72,7 +72,7 @@ const articles = [
     family: 'Woody aquatic',
     vibe: 'Fresh, sporty, energetic',
     bestFor: 'Hot weather, daytime, and active days',
-    image: 'https://fimgs.net/mdimg/perfume/375x500.18471.jpg',
+    image: 'https://media.ulta.com/i/ulta/2279388?fmt=auto&h=600&w=600',
     imageAlt: 'Invictus perfume bottle',
     summary:
       'Invictus is a bright aquatic designer scent with a sporty trophy-bottle look and a clean, energetic profile that feels easy to reach for.',
@@ -94,7 +94,7 @@ const articles = [
     family: 'Oriental fougere',
     vibe: 'Warm, cozy, seductive',
     bestFor: 'Cold nights and dressed-up evenings',
-    image: 'https://fimgs.net/mdimg/perfume/375x500.430.jpg',
+    image: 'https://media.ulta.com/i/ulta/2082116?fmt=auto&h=600&w=600',
     imageAlt: 'Jean Paul Gaultier Le Male perfume bottle',
     summary:
       'JPG Le Male is a classic warm fragrance with mint, lavender, and vanilla that still feels iconic for people who love sweeter scents.',

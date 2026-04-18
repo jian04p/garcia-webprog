@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logoMark from '../assets/logo-mark.svg';
+import FragPHLogo from './FragPHLogo';
 import articles from '../assets/article-content.js';
 
 const Footer = () => {
@@ -9,15 +9,10 @@ const Footer = () => {
         <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
-              <img
-                src={logoMark}
-                alt="FragPH mark"
-                className="h-12 w-12 rounded-2xl border border-[#3b3025] bg-white/[0.04] p-1.5"
-              />
+              <div className="rounded-2xl border border-[#3b3025] bg-white/[0.02] px-3 py-2">
+                <FragPHLogo className="h-9 w-auto text-[#f3ecdf]" />
+              </div>
               <div>
-                <p className="brand-heading text-2xl font-semibold tracking-[-0.05em] text-[#f3ecdf]">
-                  FragPH
-                </p>
                 <p className="text-[0.7rem] font-semibold uppercase tracking-[0.32em] text-[#b59663]">
                   Stay mabango!
                 </p>
@@ -43,6 +38,9 @@ const Footer = () => {
               </Link>
               <Link className="text-sm text-[#f3ecdf] transition hover:text-[#b59663]" to="/articles">
                 Perfume Articles
+              </Link>
+              <Link className="text-sm text-[#f3ecdf] transition hover:text-[#b59663]" to="/auth/signin">
+                Sign In
               </Link>
             </div>
           </div>
