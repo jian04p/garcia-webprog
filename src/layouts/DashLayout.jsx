@@ -32,6 +32,7 @@ const Drawer = styled(MuiDrawer)(({ open }) => ({
     width: open ? drawerWidth : 80,
     transition: '0.3s',
     overflowX: 'hidden',
+    backgroundColor: '#ffffff',
   },
 }));
 
@@ -39,6 +40,7 @@ const AppBar = styled(MuiAppBar)(({ open }) => ({
   width: `calc(100% - ${open ? drawerWidth : 80}px)`,
   marginLeft: open ? drawerWidth : 80,
   transition: '0.3s',
+  backgroundColor: '#1976d2',
 }));
 
 const DashLayout = () => {
@@ -76,6 +78,7 @@ const DashLayout = () => {
               component={Link}
               to="/dashboard"
               selected={location.pathname === "/dashboard"}
+              sx={{ '&.Mui-selected': { backgroundColor: '#e3f2fd' } }}
             >
               <ListItemIcon><DashboardIcon /></ListItemIcon>
               {open && <ListItemText primary="Dashboard" />}
@@ -87,6 +90,7 @@ const DashLayout = () => {
               component={Link}
               to="/dashboard/reports"
               selected={location.pathname === "/dashboard/reports"}
+              sx={{ '&.Mui-selected': { backgroundColor: '#e3f2fd' } }}
             >
               <ListItemIcon><AssessmentIcon /></ListItemIcon>
               {open && <ListItemText primary="Reports" />}
@@ -98,6 +102,7 @@ const DashLayout = () => {
               component={Link}
               to="/dashboard/users"
               selected={location.pathname === "/dashboard/users"}
+              sx={{ '&.Mui-selected': { backgroundColor: '#e3f2fd' } }}
             >
               <ListItemIcon><PeopleIcon /></ListItemIcon>
               {open && <ListItemText primary="Users" />}

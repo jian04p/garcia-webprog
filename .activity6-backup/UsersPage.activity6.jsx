@@ -13,7 +13,6 @@ import {
   InputAdornment,
   MenuItem,
   Paper,
-  Select,
   Stack,
   Switch,
   TextField,
@@ -87,10 +86,6 @@ const UsersPage = () => {
   const [form, setForm] = useState(blankForm);
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [roleFilter, setRoleFilter] = useState('all');
-  const [genderFilter, setGenderFilter] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
 
   const resetForm = () => {
     setForm(blankForm);
@@ -138,22 +133,6 @@ const UsersPage = () => {
 
     if (!nextErrors.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       nextErrors.email = 'Enter a valid email address.';
-    }
-
-    if (!nextErrors.password && form.password.length < 8) {
-      nextErrors.password = 'Password must be at least 8 characters.';
-    }
-
-    if (!nextErrors.contactNumber && !/^\d{11}$/.test(form.contactNumber.trim())) {
-      nextErrors.contactNumber = 'Contact number must be exactly 11 digits.';
-    }
-
-    if (!nextErrors.age && !/^\d+$/.test(form.age.trim())) {
-      nextErrors.age = 'Age must contain numbers only.';
-    }
-
-    if (!nextErrors.username && /\s/.test(username)) {
-      nextErrors.username = 'Username must not contain spaces.';
     }
 
     if (!nextErrors.email && users.some((user) => user.id !== modal.id && user.email === email)) {
@@ -287,24 +266,6 @@ const UsersPage = () => {
     },
   ];
 
-  const filteredUsers = users.filter((user) => {
-    const q = searchTerm.trim().toLowerCase();
-    const matchesSearch =
-      !q ||
-      user.firstName.toLowerCase().includes(q) ||
-      user.lastName.toLowerCase().includes(q) ||
-      user.email.toLowerCase().includes(q) ||
-      user.username.toLowerCase().includes(q);
-
-    const matchesRole = roleFilter === 'all' || user.role === roleFilter;
-    const matchesGender = genderFilter === 'all' || user.gender === genderFilter;
-    const matchesStatus =
-      statusFilter === 'all' ||
-      (statusFilter === 'active' ? user.isActive : !user.isActive);
-
-    return matchesSearch && matchesRole && matchesGender && matchesStatus;
-  });
-
   return (
     <Box sx={{ width: '100%', minWidth: 0 }}>
       <Box
@@ -329,42 +290,11 @@ const UsersPage = () => {
         </Alert>
       ) : null}
 
-      <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ mb: 2 }}>
-        <TextField
-          label="Search users"
-          placeholder="First name, last name, email, username"
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
-          fullWidth
-        />
-        <Select value={roleFilter} onChange={(event) => setRoleFilter(event.target.value)} displayEmpty>
-          <MenuItem value="all">All Roles</MenuItem>
-          {roles.map((role) => (
-            <MenuItem key={role} value={role}>
-              {labelize(role)}
-            </MenuItem>
-          ))}
-        </Select>
-        <Select value={genderFilter} onChange={(event) => setGenderFilter(event.target.value)} displayEmpty>
-          <MenuItem value="all">All Genders</MenuItem>
-          {genders.map((gender) => (
-            <MenuItem key={gender} value={gender}>
-              {labelize(gender)}
-            </MenuItem>
-          ))}
-        </Select>
-        <Select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)} displayEmpty>
-          <MenuItem value="all">All Status</MenuItem>
-          <MenuItem value="active">Active</MenuItem>
-          <MenuItem value="inactive">Inactive</MenuItem>
-        </Select>
-      </Stack>
-
       <Paper sx={{ p: { xs: 1.5, sm: 2 }, minWidth: 0, overflow: 'hidden' }}>
-        {filteredUsers.length ? (
+        {users.length ? (
           <Box sx={{ height: { xs: 460, sm: 520 }, width: '100%', minWidth: 0 }}>
             <DataGrid
-              rows={filteredUsers}
+              rows={users}
               columns={columns}
               disableRowSelectionOnClick
               pageSizeOptions={[5, 10]}
@@ -378,7 +308,7 @@ const UsersPage = () => {
             />
           </Box>
         ) : (
-          <Alert severity="info">No users match your search/filter.</Alert>
+          <Alert severity="info">No users found. Use Add User to create your first record.</Alert>
         )}
       </Paper>
 

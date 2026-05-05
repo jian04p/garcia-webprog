@@ -89,9 +89,11 @@ const ReportsPage = () => {
         </Box>
 
         <Stack direction="row" spacing={1.5} flexWrap="wrap" useFlexGap>
-          <Button variant="contained" onClick={handlePrint}>
+          <Button variant="contained">Generate</Button>
+          <Button variant="outlined" onClick={handlePrint}>
             Export
           </Button>
+          <Button variant="outlined">Filter</Button>
         </Stack>
       </Stack>
 
