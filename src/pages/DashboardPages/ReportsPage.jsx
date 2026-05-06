@@ -92,6 +92,8 @@ const ReportsPage = () => {
           <Button variant="contained" onClick={handlePrint}>
             Export
           </Button>
+          <Button variant="outlined">Generate</Button>
+          <Button variant="outlined">Filter</Button>
         </Stack>
       </Stack>
 

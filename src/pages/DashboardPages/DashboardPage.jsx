@@ -1,4 +1,6 @@
 import { Box, Card, CardContent, Grid, Paper, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { DataGrid } from '@mui/x-data-grid';
@@ -35,6 +37,9 @@ const averageAge = (
 ).toFixed(1);
 
 const DashboardPage = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <Box sx={{ mt: 2 }}>
       <Typography variant="h4" gutterBottom>
@@ -68,6 +73,7 @@ const DashboardPage = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={8}>
           <Paper sx={{ p: 2 }} variant="outlined">
+            <Box sx={{ width: '100%', overflowX: 'auto' }}>
             <BarChart
               xAxis={[{ data: ['Q1', 'Q2', 'Q3', 'Q4'], scaleType: 'band' }]}
               series={[
@@ -75,7 +81,9 @@ const DashboardPage = () => {
                 { data: [50, 7, 49, 29], label: 'Series 2', color: '#f9a825' },
               ]}
               height={260}
+              width={isMobile ? 420 : 760}
             />
+            </Box>
           </Paper>
         </Grid>
 
