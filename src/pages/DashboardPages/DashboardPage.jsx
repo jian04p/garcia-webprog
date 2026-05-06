@@ -4,6 +4,18 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { DataGrid } from '@mui/x-data-grid';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
 
 const rows = [
   { id: 1, firstName: 'Jon', lastName: 'Snow', age: 14 },
@@ -129,6 +141,31 @@ const DashboardPage = () => {
           />
         </Box>
       </Paper>
+
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h5" gutterBottom>
+          Location Map
+        </Typography>
+        <Box sx={{ height: 500, width: '100%' }}>
+          <MapContainer
+            center={[14.604253, 120.994314]}
+            zoom={13}
+            style={{ height: '100%', width: '100%' }}
+          >
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            <Marker position={[14.604253, 120.994314]}>
+              <Popup>
+                National University-Manila
+                <br />
+                <p><i>551 F Jhocson St, Sampaloc, Manila, 1008 Metro Manila</i></p>
+              </Popup>
+            </Marker>
+          </MapContainer>
+        </Box>
+      </Box>
     </Box>
   );
 };
