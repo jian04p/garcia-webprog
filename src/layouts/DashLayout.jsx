@@ -21,7 +21,9 @@ import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import PeopleIcon from '@mui/icons-material/People';
+import ArticleIcon from '@mui/icons-material/Article';
 import Button from '@mui/material/Button';
+import { clearStoredSession, getStoredFirstName, getStoredUserType } from '../utils/auth';
 
 const drawerWidth = 240;
 
@@ -47,6 +49,14 @@ const DashLayout = () => {
   const [open, setOpen] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
+  const firstName = getStoredFirstName();
+  const userType = getStoredUserType();
+  const isAdmin = userType === 'admin';
+
+  const handleLogout = () => {
+    clearStoredSession();
+    navigate('/auth/signin');
+  };
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f4f6f8' }}>
@@ -59,10 +69,10 @@ const DashLayout = () => {
           </IconButton>
 
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Admin Dashboard
+            {firstName ? `Welcome, ${firstName}` : 'Dashboard'}
           </Typography>
 
-          <Button color="inherit" onClick={() => navigate('/')}>
+          <Button color="inherit" onClick={handleLogout}>
             Logout
           </Button>
         </Toolbar>
@@ -77,7 +87,7 @@ const DashLayout = () => {
             <ListItemButton
               component={Link}
               to="/dashboard"
-              selected={location.pathname === "/dashboard"}
+              selected={location.pathname === '/dashboard'}
               sx={{ '&.Mui-selected': { backgroundColor: '#e3f2fd' } }}
             >
               <ListItemIcon><DashboardIcon /></ListItemIcon>
@@ -89,7 +99,7 @@ const DashLayout = () => {
             <ListItemButton
               component={Link}
               to="/dashboard/reports"
-              selected={location.pathname === "/dashboard/reports"}
+              selected={location.pathname === '/dashboard/reports'}
               sx={{ '&.Mui-selected': { backgroundColor: '#e3f2fd' } }}
             >
               <ListItemIcon><AssessmentIcon /></ListItemIcon>
@@ -100,14 +110,28 @@ const DashLayout = () => {
           <ListItem disablePadding>
             <ListItemButton
               component={Link}
-              to="/dashboard/users"
-              selected={location.pathname === "/dashboard/users"}
+              to="/dashboard/articles"
+              selected={location.pathname === '/dashboard/articles'}
               sx={{ '&.Mui-selected': { backgroundColor: '#e3f2fd' } }}
             >
-              <ListItemIcon><PeopleIcon /></ListItemIcon>
-              {open && <ListItemText primary="Users" />}
+              <ListItemIcon><ArticleIcon /></ListItemIcon>
+              {open && <ListItemText primary="Articles" />}
             </ListItemButton>
           </ListItem>
+
+          {isAdmin ? (
+            <ListItem disablePadding>
+              <ListItemButton
+                component={Link}
+                to="/dashboard/users"
+                selected={location.pathname === '/dashboard/users'}
+                sx={{ '&.Mui-selected': { backgroundColor: '#e3f2fd' } }}
+              >
+                <ListItemIcon><PeopleIcon /></ListItemIcon>
+                {open && <ListItemText primary="Users" />}
+              </ListItemButton>
+            </ListItem>
+          ) : null}
         </List>
       </Drawer>
 

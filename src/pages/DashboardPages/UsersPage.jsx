@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Alert,
   Box,
@@ -24,7 +24,7 @@ import { useTheme } from '@mui/material/styles';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { DataGrid } from '@mui/x-data-grid';
-import usersSeed from '../../assets/users.json?raw';
+import { createUser, fetchUsers, updateUser } from '../../services/UserService';
 
 const roles = ['admin', 'editor', 'viewer'];
 const genders = ['male', 'female', 'other'];
@@ -46,51 +46,37 @@ const blankForm = {
 const labelize = (value) =>
   value ? `${value.charAt(0).toUpperCase()}${value.slice(1)}` : '';
 
-const loadUsers = () => {
-  try {
-    return {
-      users: JSON.parse(usersSeed).map((user, index) => ({
-        id: Number(user.id) || index + 1,
-        firstName: String(user.firstName ?? '').trim(),
-        lastName: String(user.lastName ?? '').trim(),
-        age: String(user.age ?? '').trim(),
-        gender: genders.includes(String(user.gender ?? '').trim().toLowerCase())
-          ? String(user.gender ?? '').trim().toLowerCase()
-          : '',
-        contactNumber: String(user.contactNumber ?? '').trim(),
-        email: String(user.email ?? '').trim().toLowerCase(),
-        role: roles.includes(String(user.role ?? '').trim().toLowerCase())
-          ? String(user.role ?? '').trim().toLowerCase()
-          : 'editor',
-        username: String(user.username ?? '').trim().toLowerCase(),
-        password: String(user.password ?? ''),
-        address: String(user.address ?? '').trim(),
-        isActive: typeof user.isActive === 'boolean' ? user.isActive : true,
-      })),
-      error: '',
-    };
-  } catch {
-    return {
-      users: [],
-      error: 'Unable to read users from src/assets/users.json.',
-    };
-  }
-};
-
-const seed = loadUsers();
-
 const UsersPage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [users, setUsers] = useState(seed.users);
+  const [users, setUsers] = useState([]);
   const [modal, setModal] = useState({ open: false, id: null });
   const [form, setForm] = useState(blankForm);
   const [errors, setErrors] = useState({});
+  const [loadError, setLoadError] = useState('');
+  const [loading, setLoading] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [genderFilter, setGenderFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
+
+  const loadUsers = async () => {
+    try {
+      setLoading(true);
+      setLoadError('');
+      const data = await fetchUsers();
+      setUsers(data.users);
+    } catch (error) {
+      setLoadError(error.response?.data?.message || 'Unable to load users from the server.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
 
   const resetForm = () => {
     setForm(blankForm);
@@ -130,7 +116,6 @@ const UsersPage = () => {
       ['email', 'Email'],
       ['role', 'Role'],
       ['username', 'Username'],
-      ['password', 'Password'],
       ['address', 'Address'],
     ].forEach(([key, label]) => {
       if (!String(form[key]).trim()) nextErrors[key] = `${label} is required.`;
@@ -140,7 +125,11 @@ const UsersPage = () => {
       nextErrors.email = 'Enter a valid email address.';
     }
 
-    if (!nextErrors.password && form.password.length < 8) {
+    if (!modal.id && !String(form.password).trim()) {
+      nextErrors.password = 'Password is required.';
+    }
+
+    if (!nextErrors.password && form.password && form.password.length < 8) {
       nextErrors.password = 'Password must be at least 8 characters.';
     }
 
@@ -170,7 +159,7 @@ const UsersPage = () => {
     return nextErrors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const nextErrors = validate();
     if (Object.keys(nextErrors).length) {
@@ -192,25 +181,36 @@ const UsersPage = () => {
       isActive: form.isActive,
     };
 
-    setUsers((prev) =>
-      modal.id
-        ? prev.map((user) => (user.id === modal.id ? { ...user, ...nextUser } : user))
-        : [
-            ...prev,
-            {
-              id: prev.reduce((max, user) => Math.max(max, Number(user.id) || 0), 0) + 1,
-              ...nextUser,
-            },
-          ],
-    );
+    try {
+      if (modal.id) {
+        const savedUser = await updateUser(modal.id, nextUser);
+        setUsers((prev) => prev.map((user) => (user.id === modal.id ? savedUser : user)));
+      } else {
+        const savedUser = await createUser(nextUser);
+        setUsers((prev) => [savedUser, ...prev]);
+      }
 
-    closeModal();
+      closeModal();
+    } catch (error) {
+      setErrors({
+        form: error.response?.data?.message || 'Unable to save user.',
+      });
+    }
   };
 
-  const toggleStatus = (id) => {
-    setUsers((prev) =>
-      prev.map((user) => (user.id === id ? { ...user, isActive: !user.isActive } : user)),
-    );
+  const toggleStatus = async (id) => {
+    const selectedUser = users.find((user) => user.id === id);
+    if (!selectedUser) return;
+
+    try {
+      const savedUser = await updateUser(id, {
+        ...selectedUser,
+        isActive: !selectedUser.isActive,
+      });
+      setUsers((prev) => prev.map((user) => (user.id === id ? savedUser : user)));
+    } catch (error) {
+      setLoadError(error.response?.data?.message || 'Unable to update user status.');
+    }
   };
 
   const fieldProps = (name, label, extra = {}) => ({
@@ -323,9 +323,9 @@ const UsersPage = () => {
         </Button>
       </Box>
 
-      {seed.error ? (
+      {loadError ? (
         <Alert severity="error" sx={{ mb: 2 }}>
-          {seed.error}
+          {loadError}
         </Alert>
       ) : null}
 
@@ -366,6 +366,7 @@ const UsersPage = () => {
             <DataGrid
               rows={filteredUsers}
               columns={columns}
+              loading={loading}
               disableRowSelectionOnClick
               pageSizeOptions={[5, 10]}
               initialState={{ pagination: { paginationModel: { pageSize: 5, page: 0 } } }}
@@ -387,6 +388,7 @@ const UsersPage = () => {
           <DialogTitle>{modal.id ? 'Edit User' : 'Add User'}</DialogTitle>
           <DialogContent dividers sx={{ px: { xs: 2, sm: 3 } }}>
             <Stack spacing={2} sx={{ pt: 1 }}>
+              {errors.form ? <Alert severity="error">{errors.form}</Alert> : null}
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <TextField {...fieldProps('firstName', 'First Name')} />
                 <TextField {...fieldProps('lastName', 'Last Name')} />

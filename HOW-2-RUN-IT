@@ -1,0 +1,56 @@
+You can run it yourself with two terminals.
+
+From the project root:
+
+Backend
+cd d:\DEV\LABACT2-GARCIA-WEBPROG\garcia-server
+npm run dev
+Frontend
+cd d:\DEV\LABACT2-GARCIA-WEBPROG
+npm run dev
+Then open the frontend URL in your browser. Usually it will be:
+http://127.0.0.1:5173/
+
+A couple of things to keep in mind:
+
+MongoDB Compass or the MongoDB service needs to be running.
+Keep both terminals open while you use the app.
+If 5173 is busy, Vite may give you a different port. Use the exact URL shown in the frontend terminal.
+For a quick test after startup:
+
+Admin login: admin12345@fragph.com / Admin12345
+
+//FULL RUN
+
+From the project root, you can run everything with:
+
+npm run dev:full
+What it does:
+
+starts the frontend Vite app
+starts the backend garcia-server with nodemon
+A couple of useful notes:
+
+npm run dev still means frontend only
+npm run dev:server starts backend only
+npm run dev:full is the new all-in-one command
+I also installed concurrently and added the root scripts in package.json. I smoke-tested the command and both client and server started together.
+
+So your usual flow now is just:
+
+cd d:\DEV\LABACT2-GARCIA-WEBPROG
+npm run dev:full
+Then open the URL Vite shows in the terminal.
+
+
+//TO CLOSE 
+
+Use this in a new PowerShell terminal to force-stop the app ports:
+
+$ports = 5000,5173
+foreach ($port in $ports) {
+  $connections = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue
+  foreach ($connection in $connections) {
+    Stop-Process -Id $connection.OwningProcess -Force
+  }
+}

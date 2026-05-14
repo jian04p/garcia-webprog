@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { loginUser } from '../../services/UserService';
 
 const inputClasses =
   'mt-2 w-full rounded-2xl border border-[#3b3025] bg-[#0f1316] px-4 py-3 text-sm text-[#f3ecdf] outline-none transition placeholder:text-[#6f6455] focus:border-[#b59663] focus:bg-[#12181c]';
@@ -7,6 +9,57 @@ const socialButtonClasses =
   'w-full rounded-2xl border border-[#3b3025] bg-white/[0.03] px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#d8cab7] transition hover:border-[#b59663] hover:bg-white/[0.07] hover:text-[#f3ecdf]';
 
 const SignInPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState(location.state?.successMessage || '');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!location.state) return;
+
+    setCredentials((prev) => ({
+      ...prev,
+      email: location.state.registeredEmail || prev.email,
+    }));
+    setSuccessMessage(location.state.successMessage || '');
+
+    navigate(location.pathname, { replace: true });
+  }, [location.pathname, location.state, navigate]);
+
+  const handleChange = ({ target: { name, value } }) => {
+    setCredentials((prev) => ({ ...prev, [name]: value }));
+    setError('');
+    if (successMessage) {
+      setSuccessMessage('');
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      setLoading(true);
+      const data = await loginUser(credentials);
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('firstName', data.firstName);
+      localStorage.setItem('type', data.type);
+
+      navigate('/dashboard', {
+        state: {
+          firstName: data.firstName,
+          type: data.type,
+        },
+      });
+    } catch (err) {
+      setError(err.response?.data?.message || 'Login failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#b59663]">
@@ -20,7 +73,7 @@ const SignInPage = () => {
         scent picks.
       </p>
 
-      <form className="mt-8 space-y-5">
+      <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
         <div className="grid gap-3 sm:grid-cols-2">
           <button type="button" className={socialButtonClasses}>
             Google
@@ -47,10 +100,14 @@ const SignInPage = () => {
           </label>
           <input
             id="signin-email"
+            name="email"
             type="email"
             placeholder="name@email.com"
             autoComplete="email"
+            value={credentials.email}
+            onChange={handleChange}
             className={inputClasses}
+            required
           />
         </div>
 
@@ -60,12 +117,28 @@ const SignInPage = () => {
           </label>
           <input
             id="signin-password"
+            name="password"
             type="password"
             placeholder="Enter your password"
             autoComplete="current-password"
+            value={credentials.password}
+            onChange={handleChange}
             className={inputClasses}
+            required
           />
         </div>
+
+        {error ? (
+          <div className="rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+            {error}
+          </div>
+        ) : null}
+
+        {successMessage ? (
+          <div className="rounded-2xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+            {successMessage}
+          </div>
+        ) : null}
 
         <div className="flex items-center justify-between gap-4 text-sm">
           <label className="flex items-center gap-2 text-[#c9baa9]">
@@ -81,7 +154,7 @@ const SignInPage = () => {
           type="submit"
           className="w-full rounded-2xl border border-[#b59663] bg-[#b59663] px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#111312] transition hover:-translate-y-0.5 hover:bg-[#c7a66e]"
         >
-          Log In
+          {loading ? 'Logging In...' : 'Log In'}
         </button>
       </form>
 

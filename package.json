@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:server": "npm --prefix garcia-server run dev",
+    "dev:full": "concurrently --names client,server --prefix-colors blue,green \"npm run dev\" \"npm run dev:server\"",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -17,6 +19,8 @@
     "@mui/x-charts": "^9.0.4",
     "@mui/x-data-grid": "^9.0.4",
     "@tailwindcss/vite": "^4.2.2",
+    "axios": "^1.16.1",
+    "dotenv": "^17.4.2",
     "leaflet": "^1.9.4",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
@@ -29,6 +33,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",

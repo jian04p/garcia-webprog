@@ -1,8 +1,10 @@
 import Button from '../../components/Button';
 import ArticleList from '../../components/ArticleList';
-import articles from '../../assets/article-content.js';
+import { getPublicArticles } from '../../services/ArticleService';
 
 const ArticleListPage = () => {
+  const articles = getPublicArticles();
+
   return (
     <div className="flex w-full flex-col gap-6">
       <section className="border-y border-[#3b3025] bg-[#15171a]/88 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
@@ -33,7 +35,13 @@ const ArticleListPage = () => {
           <h2 className="mt-2 text-2xl font-semibold text-[#f3ecdf]">FragPH article list</h2>
         </div>
 
-        <ArticleList articles={articles} />
+        {articles.length ? (
+          <ArticleList articles={articles} />
+        ) : (
+          <div className="rounded-[28px] border border-[#3b3025] bg-[#17191c]/92 p-6 text-[#d8cab7]">
+            No active articles are available right now.
+          </div>
+        )}
       </section>
     </div>
   );

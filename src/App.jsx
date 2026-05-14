@@ -15,6 +15,8 @@ import DashLayout from './layouts/DashLayout';
 import DashboardPage from './pages/DashboardPages/DashboardPage';
 import ReportsPage from './pages/DashboardPages/ReportsPage';
 import UsersPage from './pages/DashboardPages/UsersPage';
+import DashArticleListPage from './pages/DashboardPages/DashArticleListPage';
+import RequireRole from './components/RequireRole';
 
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -59,7 +61,11 @@ const routes = [
   },
   {
     path: 'dashboard/',
-    element: <DashLayout />,
+    element: (
+      <RequireRole allowedRoles={['admin', 'editor']}>
+        <DashLayout />
+      </RequireRole>
+    ),
     errorElement: <NotFoundPage />,
     children: [
       {
@@ -71,8 +77,16 @@ const routes = [
         element: <ReportsPage />,
       },
       {
+        path: 'articles',
+        element: <DashArticleListPage />,
+      },
+      {
         path: 'users',
-        element: <UsersPage />,
+        element: (
+          <RequireRole allowedRoles={['admin']} fallbackPath="/dashboard">
+            <UsersPage />
+          </RequireRole>
+        ),
       },
     ],
   },
